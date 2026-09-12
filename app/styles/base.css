@@ -1,0 +1,62 @@
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  ::selection { background: var(--color-gold); color: var(--color-maroon); }
+
+  /* Casino Flat has no punctuation glyphs — apostrophes/quotes/dashes fall through
+     to Manrope. Tighten them so they sit against the heavy caps. */
+  .font-display .punct, .font-display-shadow .punct {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.72em;
+    vertical-align: 0.1em;
+    letter-spacing: 0;
+  }
+
+  /* Focus — double ring works on every surface tone */
+  :where(a, button, [role="tab"], summary, input, textarea, select):focus-visible {
+    outline: 2px solid var(--focus-halo, var(--color-shell));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--focus-ring, var(--color-maroon));
+    border-radius: inherit;
+  }
+  [data-tone="maroon"], [data-tone="green"], [data-tone="rose"] {
+    --focus-halo: var(--color-maroon);
+    --focus-ring: var(--color-shell);
+  }
+
+  html[data-announce="off"] { --announce-h: 0px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: calc(var(--container-site) + 2 * var(--spacing-gutter));
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+@utility text-balance { text-wrap: balance; }
+@utility text-pretty { text-wrap: pretty; }
+
+html[data-announce="off"] [data-announce-bar] { display: none; }

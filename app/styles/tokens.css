@@ -1,0 +1,101 @@
+/* ─────────────────────────────────────────────────────────────
+   IICF 2027 — design tokens (single source of truth)
+   Every value here was sampled from the Figma frame 61:188.
+   Components reference tokens only — never raw hex or px.
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  /* Brand primitives */
+  --color-maroon: #8b1821;
+  --color-maroon-deep: #7d2c0f;
+  --color-cream: #f9f0e1;
+  --color-shell: #fcf7ee;
+  --color-cream-text: #ffefd5;
+  --color-green: #1e7a2d;
+  --color-green-light: #53a260;
+  --color-green-deep: #284010;
+  --color-sage: #e9ebdf;
+  --color-gold: #f7c408;
+  --color-gold-pale: #ffeeae;
+  --color-teal: #72cfd6;
+  --color-lilac: #cea4cc;
+  --color-rose: #d05467;
+  --color-coral: #f05b5a;
+  --color-ink: #0b0b0b;
+  --color-ink-soft: #364153;
+  --color-rust: #af4f29;
+  --color-star: #ff8342;
+  --color-badge-bg: #dcfce7;
+  --color-badge-text: #026630;
+  --color-ink-deep: #0f0f0f;
+  --color-ink-black: #030303;
+  --color-hairline: #f3f3f3;
+  --color-logo-card: #fffdf5;
+  --color-maroon-hover: #7a141c;
+  --color-green-hover: #1a6a27;
+  --color-gold-hover: #f0be00;
+
+  /* Fonts — the *-face vars are injected by next/font on <html> */
+  --font-display: var(--font-display-face), "Impact", "Arial Narrow", sans-serif;
+  --font-display-shadow: var(--font-display-shadow-face), var(--font-display-face), "Impact", sans-serif;
+  --font-body: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: var(--font-accent-face), "Arial Narrow", sans-serif;
+  --font-script: var(--font-script-face), "Comic Sans MS", cursive;
+
+  /* Fluid display scale (desktop values match Figma at 1440) */
+  --text-display-hero: clamp(2.75rem, 1.2rem + 5.4vw, 5.625rem);   /* 44 → 90 */
+  --text-display-hero--line-height: 1.05;
+  --text-display-hero--letter-spacing: -0.04em;
+  --text-display-xl: clamp(2.5rem, 1.3rem + 4vw, 5rem);            /* 40 → 80 */
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.01em;
+  --text-display-lg: clamp(2.25rem, 1.4rem + 3vw, 4rem);           /* 36 → 64 */
+  --text-display-lg--line-height: 1.12;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-md: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);       /* 28 → 40 */
+  --text-display-md--line-height: 1.1;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-sm: 2rem;                                          /* 32 */
+  --text-display-sm--line-height: 1.1;
+  --text-display-sm--letter-spacing: -0.02em;
+  --text-display-xs: 1.5rem;                                        /* 24 */
+  --text-display-xs--line-height: 1.4;
+  --text-display-xs--letter-spacing: -0.02em;
+
+  --text-lead: 1.125rem;   --text-lead--line-height: 1.5;           /* 18 */
+  --text-body: 1rem;       --text-body--line-height: 1.5;           /* 16 */
+  --text-eyebrow: 0.875rem; --text-eyebrow--line-height: 1.5; --text-eyebrow--letter-spacing: 0.08em;
+  --text-badge: 0.75rem;   --text-badge--line-height: 1.33;
+  --text-script: 1rem;     --text-script--line-height: 1.04;
+  --text-script-lg: 1.3125rem; --text-script-lg--line-height: 1.04;
+
+  /* Radii */
+  --radius-chip: 1rem;      /* 16 */
+  --radius-card: 1.5rem;    /* 24 */
+  --radius-tile: 1rem;      /* 16 */
+  --radius-quote: 2rem;     /* 32 */
+  --radius-pill: 9999px;
+
+  /* Layout */
+  --container-site: 82.25rem;                                 /* 1316 */
+  --spacing-gutter: clamp(1.25rem, 0.5rem + 3.5vw, 3.875rem); /* 20 → 62 */
+  --spacing-section: clamp(4rem, 2rem + 6vw, 7.5rem);         /* 64 → 120 */
+  --spacing-section-lg: clamp(5rem, 2.5rem + 8vw, 10rem);     /* 80 → 160 */
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --duration-fast: 200ms;
+  --duration-base: 420ms;
+  --duration-slow: 800ms;
+
+  /* Shadows */
+  --shadow-card: 0 4px 10px rgb(0 0 0 / 0.05);
+  --shadow-card-hover: 0 18px 40px -12px rgb(139 24 33 / 0.18);
+  --shadow-header: 0 8px 30px -12px rgb(139 24 33 / 0.16);
+}
+
+:root {
+  --announce-h: 48px;
+  --header-h: 88px;
+}

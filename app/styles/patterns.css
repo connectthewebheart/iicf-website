@@ -1,0 +1,109 @@
+/* ─── Scroll reveal ────────────────────────────────────────────
+   Elements carry data-reveal (+ optional data-reveal-delay="ms").
+   A single IntersectionObserver (MotionProvider) sets data-inview.
+   No JS on the sections themselves. */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-soft),
+    transform var(--duration-slow) var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+[data-reveal="scale"] { transform: scale(0.94); }
+[data-reveal="left"] { transform: translate3d(-32px, 0, 0); }
+[data-reveal="right"] { transform: translate3d(32px, 0, 0); }
+[data-reveal][data-inview] { opacity: 1; transform: none; }
+[data-reveal-stagger] > [data-reveal] { transition-delay: calc(var(--reveal-delay, 0ms) + var(--stagger-i, 0) * 90ms); }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+/* Before hydration, show everything (no JS = no reveal) */
+html:not([data-motion]) [data-reveal] { opacity: 1; transform: none; }
+
+/* ─── Hero image entrance ───────────────────────────────────── */
+@keyframes hero-in {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: scale(1); }
+}
+.hero-image { animation: hero-in 1.2s var(--ease-out-soft) both; }
+
+/* ─── Marquee ───────────────────────────────────────────────── */
+@keyframes marquee { to { transform: translate3d(calc(-50% - var(--marquee-gap, 20px)), 0, 0); } }
+.marquee { --marquee-gap: 40px; overflow: hidden; mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); }
+.marquee-track {
+  display: flex; gap: var(--marquee-gap); width: max-content;
+  animation: marquee var(--marquee-duration, 60s) linear infinite;
+}
+.marquee:hover .marquee-track, .marquee:focus-within .marquee-track, .marquee[data-paused] .marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee { mask-image: none; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .marquee-track { animation: none; }
+  .marquee-track > * { scroll-snap-align: start; }
+}
+
+/* ─── Highlights wheel ──────────────────────────────────────── */
+.wheel { --pointer-angle: -45deg; }
+.wheel-pointer {
+  transform: rotate(var(--pointer-angle));
+  transition: transform 650ms var(--ease-spring);
+  transform-origin: 50% 50%;
+}
+.wheel-quadrant {
+  transition: background-color var(--duration-base) var(--ease-out-soft), color var(--duration-base) var(--ease-out-soft);
+}
+.wheel-quadrant[aria-selected="true"] { background: var(--color-teal); }
+.wheel-quadrant .wheel-kicker { transition: opacity var(--duration-base); }
+.wheel-quadrant[aria-selected="true"] .wheel-kicker { opacity: 1; }
+.wheel-quadrant:not([aria-selected="true"]) .wheel-kicker { opacity: 0.6; }
+@keyframes panel-in {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: none; }
+}
+.panel-enter { animation: panel-in 480ms var(--ease-out-soft) both; }
+@keyframes arrow-nudge {
+  0% { transform: translateX(0); }
+  40% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+.arrow-nudge { animation: arrow-nudge 650ms var(--ease-out-soft); }
+
+/* ─── Micro-interactions ────────────────────────────────────── */
+.btn-arrow svg { transition: transform var(--duration-fast) var(--ease-out-soft); }
+.btn-arrow:hover svg, .btn-arrow:focus-visible svg { transform: translateX(4px); }
+.lift { transition: transform var(--duration-base) var(--ease-out-soft), box-shadow var(--duration-base) var(--ease-out-soft); }
+.lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); }
+.nav-link { position: relative; }
+.nav-link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform var(--duration-base) var(--ease-out-soft);
+}
+.nav-link:hover::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
+.sticker { transition: transform var(--duration-base) var(--ease-spring); }
+.sticker:hover { transform: rotate(var(--sticker-rot, 0deg)) scale(1.04) translateY(-3px); }
+
+/* ─── Sticky header state ───────────────────────────────────── */
+.site-header { transition: box-shadow var(--duration-base), background-color var(--duration-base); }
+.site-header[data-scrolled] { box-shadow: var(--shadow-header); background-color: color-mix(in srgb, var(--color-shell) 92%, transparent); backdrop-filter: blur(10px); }
+
+/* ─── Competition card gradients ────────────────────────────── */
+.card-grad-lilac { background: linear-gradient(180deg, #d8b3d7 0%, #f8dbf6 60%, #f8e9f7 89%, #f3e1f2 100%); --inner-glow: #e0bdde; }
+.card-grad-teal { background: linear-gradient(180deg, #72cfd6 0%, #c7eef1 60%, #e3fcfe 89%, #c8eef1 100%); --inner-glow: #a8dfe4; }
+.card-grad-gold { background: linear-gradient(180deg, #f7c408 0%, #ffeeae 60%, #fef8e4 89%, #ffeeaf 100%); --inner-glow: #f1d980; }
+.card-grad-green { background: linear-gradient(170deg, #1e7a2d 0%, #ceffd6 62%, #deffe4 81%, #e9ffec 100%); --inner-glow: #a9d9b1; }
+.card-inner-glow { box-shadow: inset 0 0 10px var(--inner-glow), var(--shadow-card); }
+
+/* ─── Experience tile photo gradient ────────────────────────── */
+.tile-grad-green { background: linear-gradient(180deg, #5da969 0%, #97d6a2 34%, #d5f0d9 72%, #dfffe4 100%); }
+
+/* ─── Bunting divider ───────────────────────────────────────── */
+.bunting { background: url("/assets/dividers/bunting.svg") center / auto 100% repeat-x; }
+
+/* ─── Hero stickers (scale with the image via container units) ─ */
+.hero-stickers { container-type: inline-size; }
+@media (min-width: 640px) {
+  .hero-stickers .sticker-text { font-size: 10.2cqw; }
+  .hero-stickers .sticker-plate { height: 17.4cqw; }
+}
